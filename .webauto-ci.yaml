@@ -74,23 +74,6 @@ artifacts:
               - "!src/ecu_system_setup/**"
           incremental_build:
             enabled: true
-        - name: ecu-system-setup
-          user: autoware
-          exec: ./.webauto-ci/main/ecu-system-setup/run.sh
-          environment_variables:
-            ECU_SYSTEM_SETUP_SOURCE_PATH: ansible
-            ECU_SYSTEM_SETUP_ANSIBLE_PLAYBOOK: ansible/playbooks/ecu_setup.yaml
-          caches:
-            - name: apt-lists
-              mountpoint: /var/lib/apt/lists
-            - name: apt-archives
-              mountpoint: /var/cache/apt/archives
-          build_result_reuse:
-            key_files:
-              - .webauto-ci/main/ecu-system-setup/**/*
-              - src/ecu_system_setup/**/*
-              - ansible/**/*
-              - ansible-galaxy-requirements.yaml
         - name: asset-deploy
           user: autoware
           exec: ./.webauto-ci/main/asset-deploy/run.sh
