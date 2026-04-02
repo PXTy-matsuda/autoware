@@ -1,6 +1,3 @@
-# The configuration file for Web.Auto CI/CD tool.
-# https://docs.web.auto/user-manuals/evaluator/configuration/reference/introduction
-
 version: 2
 
 artifacts:
@@ -95,14 +92,13 @@ artifacts:
               - ansible/**/*
               - ansible-galaxy-requirements.yaml
         - name: asset-deploy
-　　　　　　user: autoware
-　　　　　　exec: ./.webauto-ci/main/asset-deploy/run.sh
+          user: autoware
+          exec: ./.webauto-ci/main/asset-deploy/run.sh
           ml_packages:
-　　　　　- name: centerpoint_tiny2_matsuda
-　　　　　　release: demo/mlmodel/v0.02_matsuda
+            - name: centerpoint_tiny2_matsuda
+              release: demo/mlmodel/v0.02_matsuda
       base_container_image:
         from: ubuntu:22.04
-        # from: ghcr.io/tier4/pilot-auto/base-image:latest # use base image
       output_container_image:
         from: asset-deploy
         workdir: /home/autoware/pilot-auto
@@ -113,8 +109,8 @@ artifacts:
       output_installer_image:
         from: ecu-system-setup
         type: iso
-        base_iso: ubuntu-20.04.3-live-server-amd64
-        
+        base_iso: ubuntu-22.04.3-live-server-amd64
+
 simulations:
   - name: perception
     type: perception
@@ -125,7 +121,7 @@ simulations:
       runtime:
         type: gpu1/amd64/large
         parameters:
-        centerpoint_model_path: "/opt/autoware/mlmodels/centerpoint_tiny2_matsuda"
+          centerpoint_model_path: "/opt/autoware/mlmodels/centerpoint_tiny2_matsuda"
   - name: localization
     type: localization
     simulator:
