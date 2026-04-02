@@ -84,7 +84,7 @@ artifacts:
             ECU_SYSTEM_SETUP_SOURCE_PATH: ansible
             ECU_SYSTEM_SETUP_ANSIBLE_PLAYBOOK: ansible/playbooks/ecu_setup.yaml
           caches:
-            - name: apt-lists
+            - name: apt-list
               mountpoint: /var/lib/apt/lists
             - name: apt-archives
               mountpoint: /var/cache/apt/archives
@@ -94,11 +94,17 @@ artifacts:
               - src/ecu_system_setup/**/*
               - ansible/**/*
               - ansible-galaxy-requirements.yaml
+        - name: asset-deploy
+　　　　　　user: autoware
+　　　　　　exec: ./.webauto-ci/main/asset-deploy/run.sh
+　　　　　　ml_packages:
+　　　　　- name: centerpoint_tiny2_matsuda
+　　　　　　release: demo/mlmodel/v0.02_matsuda
       base_container_image:
         from: ubuntu:22.04
         # from: ghcr.io/tier4/pilot-auto/base-image:latest # use base image
       output_container_image:
-        from: autoware-build
+        from: asset-deploy
         workdir: /home/autoware/pilot-auto
         user: autoware
       output_rootfs_image:
@@ -118,14 +124,8 @@ simulations:
         artifact: main
       runtime:
         type: gpu1/amd64/large
-    pre_tasks:
-      - exec: source /home/autoware/autoware.proj/install/setup.bash && ros2 launch lidar_centerpoint lidar_centerpoint.launch.xml model_name:=centerpoint model_path:=/home/autoware/autoware_data/lidar_centerpoint model_param_path:=$(ros2 pkg prefix lidar_centerpoint --share)/config/centerpoint.param.yaml build_only:=true
-        mounts:
-      - volume: model
-        volumes:
-      - name: model
-        path: /home/autoware/autoware_data/lidar_centerpoint
-        preserve_original_files: true
+        parameters:
+        centerpoint_model_path: "/opt/autoware/mlmodels/centerpoint_tiny2_matsuda"
   - name: localization
     type: localization
     simulator:
