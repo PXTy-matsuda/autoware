@@ -84,7 +84,7 @@ artifacts:
             ECU_SYSTEM_SETUP_SOURCE_PATH: ansible
             ECU_SYSTEM_SETUP_ANSIBLE_PLAYBOOK: ansible/playbooks/ecu_setup.yaml
           caches:
-            - name: apt-list
+            - name: apt-lists
               mountpoint: /var/lib/apt/lists
             - name: apt-archives
               mountpoint: /var/cache/apt/archives
@@ -97,7 +97,7 @@ artifacts:
         - name: asset-deploy
 　　　　　　user: autoware
 　　　　　　exec: ./.webauto-ci/main/asset-deploy/run.sh
-　　　　　　ml_packages:
+          ml_packages:
 　　　　　- name: centerpoint_tiny2_matsuda
 　　　　　　release: demo/mlmodel/v0.02_matsuda
       base_container_image:
