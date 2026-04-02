@@ -86,13 +86,6 @@ artifacts:
         from: asset-deploy
         workdir: /home/autoware/pilot-auto
         user: autoware
-      output_rootfs_image:
-        from: ecu-system-setup
-        persistent_file_path: /home/autoware/pilot-auto/.webauto-ci/main/ecu-system-setup/persistents.txt
-      output_installer_image:
-        from: ecu-system-setup
-        type: iso
-        base_iso: ubuntu-22.04.3-live-server-amd64
 
 simulations:
   - name: perception
